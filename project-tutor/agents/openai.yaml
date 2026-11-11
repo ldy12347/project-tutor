@@ -1,0 +1,7 @@
+interface:
+  display_name: "Project Tutor"
+  short_description: "Learn a codebase through explanations and guided questions"
+  default_prompt: "Use Project Tutor to help me understand this repository's business flow, code paths, data ownership, and architecture. Explain simple facts directly and guide complex topics with one question at a time."
+
+policy:
+  allow_implicit_invocation: false
