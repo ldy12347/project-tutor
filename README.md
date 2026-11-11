@@ -1,10 +1,16 @@
 # Project Tutor
 
-**Project Tutor** is an explain-first, evidence-grounded learning skill for understanding existing software projects in Codex.
+**Project Tutor** is an explain-first, evidence-grounded learning skill for understanding existing software projects across compatible AI coding assistants.
 
 It is designed for developers who want to understand a project's **business behavior and architecture** without having to read and decipher the source code themselves. The AI inspects the repository, traces real execution paths, and translates the implementation into clear explanations and practical examples.
 
-**Current version: v0.2.1**
+**Current version: v0.3.0**
+
+## What changed in v0.3.0
+
+Version 0.3.0 adds cross-platform installation guidance for Codex, Claude Code, Cursor, GitHub Copilot in VS Code, and Gemini CLI. The core teaching instructions remain shared; host-specific installation and invocation are documented separately.
+
+See [Installation and compatibility](docs/INSTALLATION.md) for details.
 
 ## What changed in v0.2.1
 
@@ -60,7 +66,7 @@ The GitHub CLI installer supports multiple AI coding agents and chooses the host
 
 ## Use
 
-Open the target repository in Codex and invoke:
+Open the target repository in your AI coding assistant and invoke Project Tutor using that host's skill mechanism. For example, in Codex:
 
 ```text
 $project-tutor
@@ -75,6 +81,8 @@ Use Hybrid mode. Help me understand this project's business and architecture.
 Start with a real user scenario. Explain the flow in plain Chinese.
 I don't want to read source code; inspect it for me and show concise evidence.
 ```
+
+The exact invocation differs by host. See [Installation and compatibility](docs/INSTALLATION.md) for the current host-specific instructions.
 
 Useful phrases during a session:
 
