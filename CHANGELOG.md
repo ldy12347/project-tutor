@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.3.0] — 2026-11-11
+
+### Added
+- Added cross-platform installation and compatibility documentation for Codex, Claude Code, Cursor, GitHub Copilot in VS Code, and Gemini CLI.
+- Added GitHub CLI installation commands using the exact nested skill path in this repository.
+- Documented user-scope and project-scope installation, host-specific invocation, and post-install verification.
+- Clarified the boundary between the portable Agent Skills core and optional Codex-specific UI metadata.
+- Documented that skill compatibility does not itself grant repository access or file-reading tools.
+
+
 ## [0.2.1] — 2026-11-11
 
 ### Fixed

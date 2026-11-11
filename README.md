@@ -44,31 +44,19 @@ If the user does not want to choose, Hybrid is the default.
 5. **Design decisions** — the requirements and constraints behind a design, plus its trade-offs.
 6. **Relevant failure paths** — validation, timeout, retry, duplicate delivery, partial failure, and recovery where applicable.
 
-## Install for Codex
+## Install across AI coding tools
 
-Clone this repository:
+Project Tutor uses the open Agent Skills format. Its core teaching instructions are shared; each coding assistant uses its own skill discovery and invocation mechanism.
 
-```bash
-git clone https://github.com/ldy12347/project-tutor.git
-cd project-tutor
-```
+See **[Installation and compatibility](docs/INSTALLATION.md)** for installation commands for Codex, Claude Code, Cursor, GitHub Copilot in VS Code, and Gemini CLI.
 
-Install the skill for your user:
+Quick install with GitHub CLI (Codex example):
 
 ```bash
-mkdir -p ~/.agents/skills
-cp -R project-tutor ~/.agents/skills/
+gh skill install ldy12347/project-tutor project-tutor/SKILL.md --agent codex --scope user
 ```
 
-The installed skill directory should be:
-
-```text
-~/.agents/skills/project-tutor/
-```
-
-To install it for only one repository, copy the `project-tutor` directory into that repository's `.agents/skills/` directory instead.
-
-If Codex does not show the skill immediately, restart Codex and check the skills picker.
+The GitHub CLI installer supports multiple AI coding agents and chooses the host-specific destination. If your installed GitHub CLI does not provide `gh skill install`, use the manual installation instructions in the compatibility guide.
 
 ## Use
 
