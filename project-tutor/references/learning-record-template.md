@@ -5,7 +5,22 @@
 - Branch or revision inspected:
 - Learning goal:
 - Learning mode: 混合模式 / 讲解模式 / 引导模式
+- Presentation: 图解优先 / 文字模式
 - Date:
+
+## Project learning roadmap
+| Chapter | Learning objective | Status | Key points covered |
+|---|---|---|---|
+| 1. | | 未开始 / 进行中 / 已完成 | |
+| 2. | | 未开始 / 进行中 / 已完成 | |
+| 3. | | 未开始 / 进行中 / 已完成 | |
+
+## Current chapter
+- Chapter:
+- Learning objective:
+- Current knowledge point:
+- Next knowledge point:
+- Next chapter recommendation:
 
 ## Project orientation
 - What the project does:

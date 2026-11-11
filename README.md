@@ -1,33 +1,18 @@
 # Project Tutor
 
-**Project Tutor** is an explain-first, evidence-grounded learning skill for understanding existing software projects across compatible AI coding assistants.
+**Project Tutor** is an explain-first, visual-first, evidence-grounded learning skill for understanding existing software projects across compatible AI coding assistants.
 
-It is designed for developers who want to understand a project's **business behavior and architecture** without having to read and decipher the source code themselves. The AI inspects the repository, traces real execution paths, and translates the implementation into clear explanations and practical examples.
+It is designed for developers who want to understand a project's **business behavior and architecture** without having to read and decipher the source code themselves. The AI inspects the repository, traces real execution paths, and translates the implementation into simple diagrams and concise explanations.
 
-**Current version: v0.3.0**
+**Current version: v0.4.0**
 
-## What changed in v0.3.0
+## What changed in v0.4.0
 
-Version 0.3.0 adds cross-platform installation guidance for Codex, Claude Code, Cursor, GitHub Copilot in VS Code, and Gemini CLI. The core teaching instructions remain shared; host-specific installation and invocation are documented separately.
+Version 0.4.0 combines three improvements based on real learning feedback:
 
-See [Installation and compatibility](docs/INSTALLATION.md) for details.
-
-## What changed in v0.2.1
-
-Version 0.2.1 fixes lesson continuity: after answering a comprehension check or a clarification question, the AI resumes the next planned teaching step instead of stopping. Users should not need to type "continue" after every small exchange.
-
-See [CHANGELOG.md](CHANGELOG.md) for details.
-
-## What changed in v0.2.0
-
-Version 0.2.0 changes the teaching model from question-first to **AI explanation first, questions second**.
-
-- Introduces the tutor and offers a learning-mode choice at the beginning.
-- Provides three modes: Hybrid (recommended), Explanation, and Guided.
-- Requires the AI to explain business context and technical terms before asking questions.
-- Makes source-code inspection the AI's responsibility; users are not assigned code-reading homework.
-- Treats "I don't know" or "I don't understand" as a signal to explain differently, not to ask harder questions.
-- Measures progress by the user's understanding of business flows and architecture, not their ability to navigate source files.
+- **Visual-first explanations:** use compact flowcharts, component maps, data-flow diagrams, and state diagrams for topics that benefit from visualization. Keep supporting text short.
+- **Continuous teaching:** move automatically through connected knowledge points within a chapter; do not stop after a correct answer or clarification.
+- **Learning roadmap and chapter handoff:** maintain a project-specific 3–5 chapter roadmap for broad learning goals. At the end of a chapter, summarize progress, recommend the next chapter, and explicitly ask whether to continue.
 
 See [CHANGELOG.md](CHANGELOG.md) for details.
 
@@ -35,11 +20,11 @@ See [CHANGELOG.md](CHANGELOG.md) for details.
 
 | Mode | How it works |
 |---|---|
-| **Hybrid (recommended)** | The AI explains first. Simple topics are explained directly; complex topics are broken into steps, followed by an optional understanding check. |
-| **Explanation** | The AI leads with clear explanations and examples. No quizzes unless the user asks. |
+| **Hybrid (recommended)** | The AI explains first. Simple topics are explained directly; complex topics use diagrams and short explanations, followed by an optional understanding check. |
+| **Explanation** | The AI leads with visual explanations and examples. No quizzes unless the user asks. |
 | **Guided** | The AI explains the necessary context first, then helps the user connect ideas through one focused question at a time. No blind guessing. |
 
-If the user does not want to choose, Hybrid is the default.
+If the user does not want to choose, Hybrid is the default. Visual-first is the default presentation style for flows, architecture, and state changes; it is not an additional learning mode.
 
 ## What it helps you understand
 
@@ -72,29 +57,23 @@ Open the target repository in your AI coding assistant and invoke Project Tutor 
 $project-tutor
 ```
 
-On first launch, Project Tutor introduces itself and asks you to choose a learning mode. You can also specify one immediately:
-
-```text
-$project-tutor
-
-Use Hybrid mode. Help me understand this project's business and architecture.
-Start with a real user scenario. Explain the flow in plain Chinese.
-I don't want to read source code; inspect it for me and show concise evidence.
-```
-
-The exact invocation differs by host. See [Installation and compatibility](docs/INSTALLATION.md) for the current host-specific instructions.
+On first launch, Project Tutor introduces itself, asks you to choose a learning mode, inspects the repository, and proposes a project-specific learning roadmap. It then starts the first chapter.
 
 Useful phrases during a session:
 
 - `混合模式` — explain first, then optionally check understanding.
 - `讲解模式` — explain without quizzes.
 - `引导模式` — explain context, then guide reasoning.
-- `继续` — continue the next explanation step.
+- `图解模式` — prioritize diagrams for flows, architecture, and state changes.
+- `文字模式` — use concise prose and tables.
+- `只看主流程` — show only the main path.
+- `展开这个节点` — explain one selected part of a diagram.
+- `继续` — continue within the current chapter, or start the next chapter after agreeing.
 - `直接解释` — skip the understanding check.
 - `换个例子` — use another concrete example.
 - `我没听懂` — stop questioning and explain more simply.
 - `检查代码依据` — verify the explanation against the source.
-- `总结本节` — summarize what has been learned.
+- `总结本节` — summarize the chapter and recommend the next one.
 
 ## Repository structure
 
@@ -103,6 +82,8 @@ project-tutor/
 ├── README.md
 ├── CHANGELOG.md
 ├── VERSION
+├── docs/
+│   └── INSTALLATION.md
 └── project-tutor/
     ├── SKILL.md
     ├── agents/
@@ -118,7 +99,8 @@ project-tutor/
 - Do not create learning records unless the user explicitly asks to save progress.
 - Verify important claims against implementation and distinguish code facts, documented intent, inference, and unknowns.
 - Source paths and line references are evidence for the explanation, not homework for the user.
+- Keep diagrams grounded in the actual implementation. Do not invent components or relationships to make a diagram look complete.
 
 ## License
 
-No license has been added yet. The repository is publicly viewable, but reuse and redistribution are not automatically granted. A license can be added in a future release.
+No license has been added yet. The repository is publicly viewable, but reuse and redistribution are not automatically granted.

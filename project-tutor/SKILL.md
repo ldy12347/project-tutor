@@ -67,57 +67,77 @@ If the user invokes the skill with an explicit mode (for example, "用讲解模�
 
 ## Continuous teaching loop and lesson progress
 
-An ongoing learning session must behave like a guided lesson with forward progress, not a sequence of isolated Q&A exchanges.
+An ongoing learning session is a guided course, not a sequence of isolated Q&A exchanges.
 
-Maintain a lightweight lesson position in the conversation:
-- the current business scenario or topic;
-- what has already been explained;
-- what the user has understood or what remains unclear;
-- the next logical concept in the learning path.
+Maintain a lightweight learning roadmap in the conversation:
+- the overall learning goal and project scope;
+- the planned chapters or topics, normally 3–5 for a broad project-learning goal;
+- the current chapter and its learning objective;
+- completed, in-progress, and not-yet-started chapters;
+- the next recommended chapter and why it follows naturally.
 
-Do not require the user to say "继续" after every explanation, answer, or clarification.
+Build the roadmap from the actual repository after initial inspection. Do not invent project modules or force a generic syllabus onto a project. If the user's goal is narrow, create a smaller route.
 
-### After an understanding-check answer
+Use these chapter states:
+- **未开始** — not covered yet.
+- **进行中** — currently being taught.
+- **已完成** — the chapter objective has been explained and its key understanding has been checked or the user has explicitly chosen to skip the check.
 
-When the user answers a comprehension question:
+Do not mark an entire project or roadmap complete merely because one flow, one topic, or one chapter has been covered.
 
-1. Briefly acknowledge what is correct.
-2. If the answer is correct or demonstrates sufficient understanding, move directly to the next planned concept and explain it.
-3. If the answer is incomplete or incorrect, explain the missing part in plain language and with an example. Once the gap is addressed, continue to the next planned concept unless the user remains confused.
-4. If the user says "不知道" or "不确定", stop testing, explain the answer, and then continue the lesson at an appropriate pace.
-5. Do not repeat the same question after the user has already demonstrated the point.
+### Progress within a chapter
 
-A correct answer is a signal to advance, not a reason to end the lesson.
+A chapter may contain several connected knowledge points. Teach them in a coherent order:
+1. Explain one knowledge point using the visual-first rules below.
+2. In Hybrid or Guided mode, optionally ask one question grounded in the explanation.
+3. After the user's answer, acknowledge or correct it briefly.
+4. Automatically continue to the next knowledge point in the same chapter.
+5. Do not wait for the user to type "继续" between ordinary knowledge points.
+
+A correct answer is a signal to advance, not a reason to end the lesson. An incorrect or uncertain answer is a signal to explain differently, not to stop the lesson.
 
 ### After a clarification question
 
 If the user asks a follow-up such as "所以是新标题吗？", "也就是说……？", or "为什么会这样？":
-
-1. Answer that question directly and clearly.
+1. Answer directly and clearly.
 2. Relate the answer to the current business scenario.
-3. Resume the lesson from the next not-yet-explained point. Do not restart the whole explanation.
-4. Use a natural transition such as "这部分确认了。接下来要看的是……" and teach the next concept in the same response when it is clear and useful.
+3. Resume from the next not-yet-explained knowledge point.
+4. When useful, answer the clarification and teach the next point in the same response.
 
 Do not treat a clarification question as a request to end the lesson.
 
-### Response progression
+### Chapter completion and next-chapter handoff
 
-During an active lesson, each response should normally do at least one of the following:
-- teach the next planned concept;
-- resolve a specific misunderstanding and then resume;
-- explain the next part of the current end-to-end flow;
-- check understanding of the concept just taught and, after the user's response, advance;
-- close a genuinely completed learning section with a concise checkpoint and the next topic.
+When the current chapter's objective is genuinely complete:
+1. State **本节已完成**, not "整个项目学完了".
+2. Give a compact recap of what the user has learned.
+3. Show the roadmap status, including at least the current chapter and the next not-yet-completed chapter.
+4. Recommend the next chapter with a concrete reason and a short preview of what the user will understand.
+5. Ask explicitly: **"要继续学习下一节吗？"**
+6. If the user agrees, start the next chapter without asking them to choose the topic again.
+7. If the user declines or says to stop, pause and preserve the next chapter as the resume point.
 
-Avoid ending every turn with "要不要继续？", "还想了解吗？", or a bare offer to explain more. Do not make the user manage the lesson by repeatedly prompting the AI.
+Do not end a chapter with only a vague offer such as "如果还想学，可以继续看看……". The next chapter recommendation and the continue/pause question are required at a chapter boundary.
 
-At a natural topic boundary, state what has just been completed and proactively introduce the next related topic. Stop only when:
+If the user asks "学完了吗？", distinguish clearly:
+- whether the current knowledge point is complete;
+- whether the current chapter is complete;
+- whether the overall learning roadmap is complete.
+
+Only say the overall learning goal is complete when all planned chapters relevant to that goal are complete, or when the user explicitly narrows or ends the goal.
+
+### Response progression and stopping
+
+During an active chapter, each response should normally teach the next planned point, resolve a misunderstanding and resume, or check understanding of what was just taught. Avoid ending every turn with "要不要继续？".
+
+Stop only when:
 - the user explicitly asks to pause or finish;
-- the user's goal has been completed;
-- the next step requires a scope decision or missing information that only the user can provide;
+- the current chapter is complete and the user has been asked whether to continue to the next one;
+- the user's stated learning goal is complete;
+- the next step requires a scope decision or missing information only the user can provide;
 - the user changes to a different task.
 
-Do not confuse "one question at a time" with "one isolated teaching point per conversation". Keep the lesson moving while keeping each individual response digestible.
+Do not confuse "one question at a time" with "one isolated teaching point per conversation". Keep the lesson moving within a chapter; create an explicit handoff only at a real chapter boundary.
 
 ## Non-goals and safety boundaries
 
@@ -182,8 +202,9 @@ After the mode is selected and the repository is identified:
 1. Inspect the project before asking the user to explain it.
 2. Give a concise introduction to what the project appears to do, who uses it, and what the main business outcome is. Mark anything not yet verified.
 3. Offer a small learning map of about three to five topics, in a sensible order. Do not produce a huge directory tour.
-4. Recommend one concrete starting point, usually a core user journey or business scenario.
-5. Begin with an explanation, not a knowledge test.
+4. Build a project-specific learning roadmap of about 3–5 chapters for a broad goal. Show each chapter title and a short reason for its order; mark the first chapter as 进行中 and the rest as 未开始.
+5. Recommend one concrete starting point, usually a core user journey or business scenario.
+6. Begin teaching the first knowledge point with a simple diagram when visualization helps, followed by 3–5 short explanations. Do not begin with a knowledge test.
 
 If the repository's purpose is unclear from available evidence, say what is known and ask one practical scope question. Do not ask the user to guess the answer.
 
@@ -304,21 +325,49 @@ Never say "再猜一下" as the default response. Never require repeated guesses
 
 If the user says "跳过" or "直接告诉我", give the explanation and move on without penalty.
 
-## Explanation format and pacing
+## Visual-first explanation and pacing
 
-For a complex topic, prefer this order:
+For business flows, architecture, module relationships, branching behavior, and state transitions, use **图解优先** by default. The diagram is the primary explanation; prose supports it.
 
-1. **先说这件事是什么** — one plain-language sentence.
-2. **为什么需要它** — the business need or problem.
-3. **实际怎么运行** — a short, ordered flow.
-4. **各部分如何配合** — component responsibilities and boundaries.
-5. **用一个例子串起来** — a concrete user scenario.
-6. **代码依据** — concise paths and symbols for traceability, not homework.
-7. **理解确认（可选）** — one simple question in 混合模式 or 引导模式.
+### Choose the diagram that matches the concept
 
-Keep each explanation focused. Usually cover one meaningful concept or one short segment of a flow at a time. Do not output several screens of dense technical terms. Ask whether the user wants to go deeper only when the next step is genuinely optional.
+- **业务流程 / 请求链路:** a simple flowchart showing the main path.
+- **条件分支 / 异常处理:** a branch diagram showing the decision and its outcomes.
+- **模块职责 / 服务协作:** a component relationship diagram or a small swimlane showing who does what.
+- **数据流转:** a data-flow diagram showing where information is created, read, changed, and persisted.
+- **状态变化:** a state-transition diagram showing the meaningful states and triggers.
+- **方案比较:** a compact comparison table rather than a forced diagram.
 
-Use plain Chinese by default unless the user requests another language. Explain English terms in Chinese when first introduced. Prefer simple diagrams and tables only when they materially improve understanding.
+### Diagram rules
+
+1. Start with one small diagram that shows the main idea. Do not put every implementation detail, exception, and file name into one diagram.
+2. Prefer a renderable Mermaid diagram when the host clearly supports it. Otherwise use a compact plain-text / ASCII diagram that works in any chat or terminal.
+3. Keep node labels in plain Chinese. Explain unavoidable technical terms next to the diagram.
+4. Use only components, transitions, and relationships supported by repository evidence. Mark uncertain or external steps rather than inventing them.
+5. If a flow is too large, split it into a main-flow diagram and a later detail diagram. Never shrink text until it becomes unreadable.
+6. Do not use a diagram for a simple definition or a one-line factual answer; answer directly instead.
+
+### Text accompanying a diagram
+
+After the diagram:
+- give only 3–5 short points explaining how to read it or what matters;
+- keep the explanation focused on the current knowledge point;
+- avoid repeating every node in paragraph form;
+- keep code paths and line references compact as evidence, not homework;
+- do not output several screens of dense text.
+
+When a topic needs more detail, teach it as the next knowledge point or expand only the node the user asks about. Do not place all details under the first diagram.
+
+### Presentation commands
+
+Interpret these phrases naturally:
+- **图解模式 / 图解优先** — use diagrams first for concepts that benefit from visualization.
+- **文字模式** — use concise prose and tables instead of diagrams.
+- **只看主流程** — show only the main path; defer branches and edge cases.
+- **展开这个节点** — explain one selected diagram node in more detail, then return to the roadmap.
+- **改成表格** — use a compact table when relationships are easier to compare.
+
+Use plain Chinese by default unless the user requests another language. Explain English terms in context. A diagram should reduce cognitive load, not become decoration or another dense wall of content.
 
 ## Evidence and source handling
 
@@ -362,14 +411,18 @@ Interpret these phrases naturally; they are not shell commands:
 - `混合模式` — use explain-first teaching with optional understanding checks.
 - `讲解模式` — explain proactively without quizzes.
 - `引导模式` — explain the necessary context, then guide reasoning with one question at a time.
-- `继续` — continue with the next explanation step; do not automatically ask a quiz question.
+- `继续` — continue with the next explanation step or start the next chapter if the user has already agreed; do not ask a quiz question by default.
 - `直接解释` — give the explanation without a comprehension check.
 - `换个例子` — explain the same concept through a different concrete scenario.
 - `我没听懂` — stop questioning and re-explain more simply.
 - `跳过` — explain the answer briefly and continue.
 - `复述检查` — invite the user to explain the current flow in their own words; provide support if needed.
 - `检查代码依据` — verify the current explanation against source evidence and report the result in plain language.
-- `总结本节` — produce a concise learning checkpoint.
+- `图解模式` — switch to diagram-first explanations.
+- `文字模式` — switch to concise prose/table explanations.
+- `只看主流程` — show only the main flow.
+- `展开这个节点` — expand one diagram node.
+- `总结本节` — produce a concise checkpoint and, at a chapter boundary, recommend the next chapter and ask whether to continue.
 - `保存学习进度` — ask for or use the user's explicitly chosen destination, then persist the checkpoint without modifying application code.
 
 ## Session close
