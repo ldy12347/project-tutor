@@ -323,25 +323,37 @@ If the user says "跳过" or "直接告诉我", give the explanation and move on
 
 ## Visual-first explanation and pacing
 
-For business flows, architecture, module relationships, branching behavior, and state transitions, use **图解优先** by default. The diagram is the primary explanation; prose supports it.
+For business flows, architecture, module relationships, branching behavior, data movement, and state transitions, use **图解优先** by default. A rendered diagram is the primary explanation; concise prose supports it.
+
+### Diagram format priority
+
+Use the following order. Do not default to a long prose explanation merely because the current host's rendering capability is uncertain.
+
+1. **Mermaid diagram (default first choice).** For a flow, branch, sequence, component relationship, or state transition, write a valid Mermaid diagram inside a fenced `mermaid` block. Mermaid is text-authored and can be rendered as a visual diagram by compatible Agent clients; it does not require generating or attaching a bitmap image.
+2. **ASCII / plain-text diagram (compatibility fallback).** Use this when the current client is known not to render Mermaid, or when the user reports that the Mermaid block appeared as raw source rather than a diagram. Keep the arrows, branches, grouping, and alignment readable.
+3. **Generated image (special case only).** Use an image only when spatial layout, a complex system map, or visual grouping cannot be communicated clearly with Mermaid or ASCII, and the host has an appropriate image-generation or diagram-rendering capability. Do not generate images for ordinary request flows or simple architecture explanations.
+
+If Mermaid support is unknown, try a compact Mermaid diagram first rather than silently downgrading to prose. If the user or the host indicates that Mermaid is displayed as source text, switch to ASCII for that host/session. Do not repeatedly emit raw Mermaid source after learning that the client cannot render it.
 
 ### Choose the diagram that matches the concept
 
-- **业务流程 / 请求链路:** a simple flowchart showing the main path.
-- **条件分支 / 异常处理:** a branch diagram showing the decision and its outcomes.
-- **模块职责 / 服务协作:** a component relationship diagram or a small swimlane showing who does what.
-- **数据流转:** a data-flow diagram showing where information is created, read, changed, and persisted.
-- **状态变化:** a state-transition diagram showing the meaningful states and triggers.
+- **业务流程 / 请求链路:** Mermaid flowchart, showing the main path first.
+- **条件分支 / 异常处理:** Mermaid flowchart with clearly labeled decision branches.
+- **模块职责 / 服务协作:** Mermaid flowchart or component relationship diagram; use subgraphs as swimlanes only when they make ownership clearer.
+- **数据流转:** Mermaid flowchart showing where information is created, read, changed, and persisted.
+- **状态变化:** Mermaid state diagram when the states and transitions are the main concept; otherwise use a flowchart.
+- **时序与异步协作:** Mermaid sequence diagram when the order of calls, messages, or acknowledgements matters.
 - **方案比较:** a compact comparison table rather than a forced diagram.
 
-### Diagram rules
+### Diagram construction rules
 
 1. Start with one small diagram that shows the main idea. Do not put every implementation detail, exception, and file name into one diagram.
-2. Prefer a renderable Mermaid diagram when the host clearly supports it. Otherwise use a compact plain-text / ASCII diagram that works in any chat or terminal.
-3. Keep node labels in plain Chinese. Explain unavoidable technical terms next to the diagram.
+2. Use valid, conservative Mermaid syntax supported by common renderers. Prefer `flowchart LR` or `flowchart TD`; use `sequenceDiagram` or `stateDiagram-v2` only when they materially clarify the concept.
+3. Keep node labels in plain Chinese. Avoid complex HTML labels, custom CSS, external icons, and renderer-specific features.
 4. Use only components, transitions, and relationships supported by repository evidence. Mark uncertain or external steps rather than inventing them.
 5. If a flow is too large, split it into a main-flow diagram and a later detail diagram. Never shrink text until it becomes unreadable.
 6. Do not use a diagram for a simple definition or a one-line factual answer; answer directly instead.
+7. Do not show Mermaid source as an ordinary code example or explain the syntax unless the user asks. The fenced `mermaid` block is intended to be rendered by the client.
 
 ### Text accompanying a diagram
 
@@ -357,7 +369,7 @@ When a topic needs more detail, teach it as the next knowledge point or expand o
 ### Presentation commands
 
 Interpret these phrases naturally:
-- **图解模式 / 图解优先** — use diagrams first for concepts that benefit from visualization.
+- **图解模式 / 图解优先** — use Mermaid-first diagrams for concepts that benefit from visualization, with ASCII fallback when Mermaid is not rendered.
 - **文字模式** — use concise prose and tables instead of diagrams.
 - **只看主流程** — show only the main path; defer branches and edge cases.
 - **展开这个节点** — explain one selected diagram node in more detail, then return to the roadmap.

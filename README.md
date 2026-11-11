@@ -4,17 +4,20 @@
 
 It is designed for developers who want to understand a project's **business behavior and architecture** without having to read and decipher the source code themselves. The AI inspects the repository, traces real execution paths, and translates the implementation into simple diagrams and concise explanations.
 
-**Current version: v0.4.0**
+**Current version: v0.4.2**
 
-## What changed in v0.4.0
+## What changed in v0.4.2
 
-Version 0.4.0 combines three improvements based on real learning feedback:
+Version 0.4.2 refines the visual-first teaching strategy:
 
-- **Visual-first explanations:** use compact flowcharts, component maps, data-flow diagrams, and state diagrams for topics that benefit from visualization. Keep supporting text short.
-- **Continuous teaching:** move automatically through connected knowledge points within a chapter; do not stop after a correct answer or clarification.
-- **Learning roadmap and automatic progression:** maintain a project-specific 3–5 chapter roadmap for broad learning goals. At the end of a chapter, briefly summarize, announce the next chapter, and continue automatically. The user can pause at any time; there is no repeated permission prompt between chapters.
+- **Mermaid first:** use fenced Mermaid diagrams for business flows, branches, component relationships, data flows, sequence interactions, and state transitions. Compatible Agent clients render the text-authored diagram visually.
+- **ASCII fallback:** use a compact text diagram when the current client is known not to render Mermaid or the user reports seeing raw Mermaid source.
+- **Images only when needed:** reserve generated images for complex spatial layouts that Mermaid and ASCII cannot explain clearly.
+- **No raw-source dumping:** do not present Mermaid syntax as an ordinary code example or replace a diagram with a long prose explanation.
 
-See [CHANGELOG.md](CHANGELOG.md) for details.
+The release also retains the v0.4.1 teaching behavior: connected knowledge points and planned chapters advance automatically; the user can pause at any time.
+
+See [CHANGELOG.md](CHANGELOG.md) for the release history.
 
 ## Learning modes
 
@@ -64,7 +67,7 @@ Useful phrases during a session:
 - `混合模式` — explain first, then optionally check understanding.
 - `讲解模式` — explain without quizzes.
 - `引导模式` — explain context, then guide reasoning.
-- `图解模式` — prioritize diagrams for flows, architecture, and state changes.
+- `图解模式` — use Mermaid diagrams first; fall back to ASCII when the client cannot render Mermaid.
 - `文字模式` — use concise prose and tables.
 - `只看主流程` — show only the main path.
 - `展开这个节点` — explain one selected part of a diagram.

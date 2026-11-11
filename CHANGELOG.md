@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.4.2] — 2026-11-11
+
+### Changed
+- Set Mermaid as the default first-choice format for visual explanations of business flows, branches, architecture relationships, data flows, sequences, and state transitions.
+- Defined ASCII diagrams as the compatibility fallback when the current Agent client is known not to render Mermaid or the user reports that Mermaid is displayed as raw source.
+- Reserved generated images for complex spatial layouts that cannot be explained clearly with Mermaid or ASCII.
+- Added conservative Mermaid syntax guidance to improve compatibility across renderers and avoid renderer-specific features.
+- Clarified that Mermaid source belongs in a fenced Mermaid block for rendering, not in an ordinary code explanation.
+- Updated README and Codex UI metadata to describe the Mermaid-first strategy.
+
+
 ## [0.4.1] — 2026-11-11
 
 ### Fixed
