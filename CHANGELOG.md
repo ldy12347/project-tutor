@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.4.1] — 2026-11-11
+
+### Fixed
+- Removed the repeated permission prompt at chapter boundaries. Starting a learning plan authorizes the tutor to proceed through its planned chapters.
+- Required the tutor to announce the next chapter and continue automatically instead of asking "要继续学习下一节吗？".
+- Added explicit pause/stop phrases and clarified that the roadmap is paused only when the user asks, the goal is complete, or essential scope information is missing.
+- Clarified that completing a chapter is a progress marker, not a reason to stop the lesson.
+
+
 ## [0.4.0] — 2026-11-11
 
 ### Added

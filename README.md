@@ -12,7 +12,7 @@ Version 0.4.0 combines three improvements based on real learning feedback:
 
 - **Visual-first explanations:** use compact flowcharts, component maps, data-flow diagrams, and state diagrams for topics that benefit from visualization. Keep supporting text short.
 - **Continuous teaching:** move automatically through connected knowledge points within a chapter; do not stop after a correct answer or clarification.
-- **Learning roadmap and chapter handoff:** maintain a project-specific 3–5 chapter roadmap for broad learning goals. At the end of a chapter, summarize progress, recommend the next chapter, and explicitly ask whether to continue.
+- **Learning roadmap and automatic progression:** maintain a project-specific 3–5 chapter roadmap for broad learning goals. At the end of a chapter, briefly summarize, announce the next chapter, and continue automatically. The user can pause at any time; there is no repeated permission prompt between chapters.
 
 See [CHANGELOG.md](CHANGELOG.md) for details.
 
@@ -68,12 +68,13 @@ Useful phrases during a session:
 - `文字模式` — use concise prose and tables.
 - `只看主流程` — show only the main path.
 - `展开这个节点` — explain one selected part of a diagram.
-- `继续` — continue within the current chapter, or start the next chapter after agreeing.
+- `继续` — resume or advance the planned lesson; normally not needed between chapters.
 - `直接解释` — skip the understanding check.
 - `换个例子` — use another concrete example.
 - `我没听懂` — stop questioning and explain more simply.
 - `检查代码依据` — verify the explanation against the source.
-- `总结本节` — summarize the chapter and recommend the next one.
+- `总结本节` — summarize the chapter and automatically transition to the next planned one.
+- `暂停` / `今天先到这里` — pause the learning plan and preserve progress.
 
 ## Repository structure
 
