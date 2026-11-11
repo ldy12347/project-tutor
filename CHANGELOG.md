@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.2.1] — 2026-11-11
+
+### Fixed
+- Added an explicit continuous teaching loop so an active lesson advances after the user answers a comprehension check.
+- Clarification questions are answered directly, then the AI resumes from the next not-yet-explained concept.
+- Prevented a correct answer or a simple confirmation from being treated as the end of the lesson.
+- Removed the expectation that users must repeatedly type "继续" after each teaching point.
+- Defined clear stopping conditions: explicit pause/finish, completed learning goal, required user scope decision, or a change of task.
+
 ## [0.2.0] — 2026-11-11
 
 ### Changed

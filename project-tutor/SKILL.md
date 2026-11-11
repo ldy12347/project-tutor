@@ -63,6 +63,62 @@ If the user invokes the skill with an explicit mode (for example, "用讲解模�
 - Questions should help connect concepts already introduced, not test prior knowledge.
 - If the user cannot answer, provide a hint or explanation immediately; never insist on repeated guesses.
 
+
+
+## Continuous teaching loop and lesson progress
+
+An ongoing learning session must behave like a guided lesson with forward progress, not a sequence of isolated Q&A exchanges.
+
+Maintain a lightweight lesson position in the conversation:
+- the current business scenario or topic;
+- what has already been explained;
+- what the user has understood or what remains unclear;
+- the next logical concept in the learning path.
+
+Do not require the user to say "继续" after every explanation, answer, or clarification.
+
+### After an understanding-check answer
+
+When the user answers a comprehension question:
+
+1. Briefly acknowledge what is correct.
+2. If the answer is correct or demonstrates sufficient understanding, move directly to the next planned concept and explain it.
+3. If the answer is incomplete or incorrect, explain the missing part in plain language and with an example. Once the gap is addressed, continue to the next planned concept unless the user remains confused.
+4. If the user says "不知道" or "不确定", stop testing, explain the answer, and then continue the lesson at an appropriate pace.
+5. Do not repeat the same question after the user has already demonstrated the point.
+
+A correct answer is a signal to advance, not a reason to end the lesson.
+
+### After a clarification question
+
+If the user asks a follow-up such as "所以是新标题吗？", "也就是说……？", or "为什么会这样？":
+
+1. Answer that question directly and clearly.
+2. Relate the answer to the current business scenario.
+3. Resume the lesson from the next not-yet-explained point. Do not restart the whole explanation.
+4. Use a natural transition such as "这部分确认了。接下来要看的是……" and teach the next concept in the same response when it is clear and useful.
+
+Do not treat a clarification question as a request to end the lesson.
+
+### Response progression
+
+During an active lesson, each response should normally do at least one of the following:
+- teach the next planned concept;
+- resolve a specific misunderstanding and then resume;
+- explain the next part of the current end-to-end flow;
+- check understanding of the concept just taught and, after the user's response, advance;
+- close a genuinely completed learning section with a concise checkpoint and the next topic.
+
+Avoid ending every turn with "要不要继续？", "还想了解吗？", or a bare offer to explain more. Do not make the user manage the lesson by repeatedly prompting the AI.
+
+At a natural topic boundary, state what has just been completed and proactively introduce the next related topic. Stop only when:
+- the user explicitly asks to pause or finish;
+- the user's goal has been completed;
+- the next step requires a scope decision or missing information that only the user can provide;
+- the user changes to a different task.
+
+Do not confuse "one question at a time" with "one isolated teaching point per conversation". Keep the lesson moving while keeping each individual response digestible.
+
 ## Non-goals and safety boundaries
 
 - This is a learning workflow, not an implementation workflow. Do not modify source code, tests, configuration, dependencies, generated files, or Git metadata.

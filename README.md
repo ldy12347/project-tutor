@@ -4,7 +4,13 @@
 
 It is designed for developers who want to understand a project's **business behavior and architecture** without having to read and decipher the source code themselves. The AI inspects the repository, traces real execution paths, and translates the implementation into clear explanations and practical examples.
 
-**Current version: v0.2.0**
+**Current version: v0.2.1**
+
+## What changed in v0.2.1
+
+Version 0.2.1 fixes lesson continuity: after answering a comprehension check or a clarification question, the AI resumes the next planned teaching step instead of stopping. Users should not need to type "continue" after every small exchange.
+
+See [CHANGELOG.md](CHANGELOG.md) for details.
 
 ## What changed in v0.2.0
 
