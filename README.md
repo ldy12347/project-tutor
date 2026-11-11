@@ -1,27 +1,42 @@
 # Project Tutor
 
-**Project Tutor** is a hybrid, evidence-grounded learning skill for understanding existing software projects in Codex.
+**Project Tutor** is an explain-first, evidence-grounded learning skill for understanding existing software projects in Codex.
 
-It helps developers build an independent mental model of both the **business behavior** and the **system architecture**—not just memorize file names or receive a large, unexplained architecture dump.
+It is designed for developers who want to understand a project's **business behavior and architecture** without having to read and decipher the source code themselves. The AI inspects the repository, traces real execution paths, and translates the implementation into clear explanations and practical examples.
 
-## Teaching approach
+**Current version: v0.2.0**
 
-- **Simple questions:** explain the relevant concept or code fact directly.
-- **Complex topics:** use guided, Socratic questions—one focused question at a time.
-- **Progressive hints:** move from conceptual hints to code pointers, partial explanations, and finally a full explanation when needed.
-- **Evidence first:** ground important conclusions in actual implementation, tests, and project documents. Distinguish observed facts, documented intent, inference, and unknowns.
-- **Read-only by default:** learning should not change the project.
+## What changed in v0.2.0
+
+Version 0.2.0 changes the teaching model from question-first to **AI explanation first, questions second**.
+
+- Introduces the tutor and offers a learning-mode choice at the beginning.
+- Provides three modes: Hybrid (recommended), Explanation, and Guided.
+- Requires the AI to explain business context and technical terms before asking questions.
+- Makes source-code inspection the AI's responsibility; users are not assigned code-reading homework.
+- Treats "I don't know" or "I don't understand" as a signal to explain differently, not to ask harder questions.
+- Measures progress by the user's understanding of business flows and architecture, not their ability to navigate source files.
+
+See [CHANGELOG.md](CHANGELOG.md) for details.
+
+## Learning modes
+
+| Mode | How it works |
+|---|---|
+| **Hybrid (recommended)** | The AI explains first. Simple topics are explained directly; complex topics are broken into steps, followed by an optional understanding check. |
+| **Explanation** | The AI leads with clear explanations and examples. No quizzes unless the user asks. |
+| **Guided** | The AI explains the necessary context first, then helps the user connect ideas through one focused question at a time. No blind guessing. |
+
+If the user does not want to choose, Hybrid is the default.
 
 ## What it helps you understand
 
-1. **Business domain** — actors, business objects, user journeys, rules, and state transitions.
+1. **Business domain** — users, business objects, user journeys, rules, and state transitions.
 2. **Architecture** — entry points, processes, module responsibilities, service boundaries, and communication paths.
-3. **End-to-end flows** — trace one real request or event through the code to its observable result.
-4. **Data and state ownership** — identify who creates, reads, writes, persists, and synchronizes each important state.
-5. **Design decisions** — reason from requirements and constraints to design choices and trade-offs.
-6. **Failure paths** — inspect relevant validation, timeout, retry, duplicate-delivery, and partial-failure behavior.
-
-The workflow adapts to the user's learning goal; it does not force every topic into every session.
+3. **End-to-end flows** — how a real request or event travels through the system and produces an observable result.
+4. **Data and state ownership** — where important data is created, maintained, persisted, and synchronized.
+5. **Design decisions** — the requirements and constraints behind a design, plus its trade-offs.
+6. **Relevant failure paths** — validation, timeout, retry, duplicate delivery, partial failure, and recovery where applicable.
 
 ## Install for Codex
 
@@ -57,22 +72,35 @@ Open the target repository in Codex and invoke:
 $project-tutor
 ```
 
-A useful starting prompt:
+On first launch, Project Tutor introduces itself and asks you to choose a learning mode. You can also specify one immediately:
 
-> Help me understand this repository's business and architecture. Start with the core business scenario. Explain simple questions directly; for complex flows, module boundaries, state ownership, and design trade-offs, guide me with one question at a time. Inspect the repository read-only and support important conclusions with code evidence. Do not produce a full architecture summary upfront.
+```text
+$project-tutor
 
-You can also say:
+Use Hybrid mode. Help me understand this project's business and architecture.
+Start with a real user scenario. Explain the flow in plain Chinese.
+I don't want to read source code; inspect it for me and show concise evidence.
+```
 
-- **开始学习** — inspect the project and establish a learning starting point.
-- **继续** — continue with one next question or step.
-- **直接解释** — switch to a direct explanation.
-- **提示** — provide the next progressive hint.
+Useful phrases during a session:
+
+- `混合模式` — explain first, then optionally check understanding.
+- `讲解模式` — explain without quizzes.
+- `引导模式` — explain context, then guide reasoning.
+- `继续` — continue the next explanation step.
+- `直接解释` — skip the understanding check.
+- `换个例子` — use another concrete example.
+- `我没听懂` — stop questioning and explain more simply.
+- `检查代码依据` — verify the explanation against the source.
+- `总结本节` — summarize what has been learned.
 
 ## Repository structure
 
 ```text
 project-tutor/
 ├── README.md
+├── CHANGELOG.md
+├── VERSION
 └── project-tutor/
     ├── SKILL.md
     ├── agents/
@@ -81,13 +109,14 @@ project-tutor/
         └── learning-record-template.md
 ```
 
-## Safety defaults
+## Safety and evidence
 
 - Read and explain; do not modify application source code, tests, configuration, dependencies, or Git metadata.
 - Do not start services, run tests or migrations, install packages, or write to databases by default.
-- Do not create learning records unless the user explicitly asks to save or resume progress.
-- Do not invent runtime behavior or design rationale. Clearly mark evidence gaps and inferences.
+- Do not create learning records unless the user explicitly asks to save progress.
+- Verify important claims against implementation and distinguish code facts, documented intent, inference, and unknowns.
+- Source paths and line references are evidence for the explanation, not homework for the user.
 
 ## License
 
-No license has been added yet. Until a license is selected, the repository is publicly viewable but reuse and redistribution are not automatically granted.
+No license has been added yet. The repository is publicly viewable, but reuse and redistribution are not automatically granted. A license can be added in a future release.
